@@ -1,57 +1,32 @@
-import java.util.*;
+import java.text.NumberFormat;
+import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
         Scanner toetsenbord = new Scanner (System.in);
+        double[] SnoepPrijzen = new double[] {1.25, 0.75, 0.9, 0.75, 1.5, 0.75};
+        int Snoep = 0;
 
-        double Snoep1 = 1.25;
-        double Snoep2 = .75;
-        double Snoep3 = .90;
-        double Snoep4 = .75;
-        double Snoep5 = 1.50;
-        double Snoep6 = .75;
-
-        System.out.print("Kies Snoepnummer aub!");
-        int Snoep = toetsenbord.nextInt();
+        System.out.print("Toets Snoepnummer: ");
+        Snoep = Integer.parseInt(toetsenbord.nextLine());
+        if (!(Snoep <= SnoepPrijzen.length)){
+            System.out.println("Helaas, we hebben deze niet meer op voorraad.");
+            toetsenbord.close();
+            return;
+        }
 
         System.out.print("De prijs betaald is: ");
-        double betaald = toetsenbord.nextDouble();
+        double betaald = Double.parseDouble(toetsenbord.nextLine());
 
-        if (Snoep == 2 || Snoep == 4 || Snoep == 6)
-        {
-            if (betaald >= Snoep2){
-                System.out.println("Bedankt voor uw aankoop!");
+        while (betaald < (SnoepPrijzen[Snoep - 1])){
+            System.out.print("U heeft nog " + "€" + NumberFormat.getCurrencyInstance().format(Math.abs((betaald - SnoepPrijzen[Snoep - 1]))) + " nodig voor " + Snoep);
+            betaald += Double.parseDouble(toetsenbord.nextLine());
         }
-        if (betaald < Snoep2){
-            System.out.println("U heeft nog " + "€" +(Snoep2-betaald) + " nodig");
-        }
-        }
-        else if (Snoep == 1){
-            if (betaald >= Snoep1){
-                System.out.println("Bedankt voor uw aankoop!");
-            }
-            if (betaald < Snoep1)
-            {
-                System.out.println("U heeft nog " + "€" +(Snoep1-betaald) + " nodig");
-            }
-        }
-        else if (Snoep == 3){
-            if (betaald >= Snoep3){
-                System.out.println("Bedankt voor uw aankoop!");
-            }
-            if (betaald < Snoep3){
-                System.out.println("U heeft nog " + "€" +(Snoep3-betaald) + " nodig");
-            }
-        }
-        else if (Snoep == 5){
-            if (betaald >= Snoep5){
-                System.out.println("Bedankt voor uw aankoop!");
-            }
-            if (betaald < Snoep5){
-                System.out.println("U heeft nog " + "€" +(Snoep5-betaald) + " nodig");
-            }
+        System.out.println("Bedankt voor het aankoop van " + Snoep + ", uw wisselgeld is " + NumberFormat.getCurrencyInstance().format(betaald - SnoepPrijzen[Snoep - 1]));
+
+        toetsenbord.close();
         }
     }
-}
+
